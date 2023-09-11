@@ -1,84 +1,38 @@
 import java.util.Scanner;
 
-public class main {
-    private static boolean[] seats = new boolean[10]; //Initailize an array of 10 seats all of them are empty
-
+public class main{
     public static void main(String[] args) {
-
-
+        int answer = (int) (Math.random() * 100 + 1);
+        int k = 5;
         Scanner sc = new Scanner(System.in);
+        boolean correct = false;
+        System.out.println("Hey User! Welcome to the number guessing game!");
+        System.out.println("In this game, you have to guess a number between 1 and 100.");
+        System.out.println("You have 5 tries to guess the number.");
 
-        while (true) {
+        while (k > 0){
+            System.out.println("Enter the number: ");
+            int guess = sc.nextInt();
 
-            //Display menu
-            System.out.println("\n Please select an option");
-            System.out.println("1. View Seat Map");
-            System.out.println("2. Reserve Seat");
-            System.out.println("3. Cancel Reservation");
-            System.out.println("4. Exit");
-
-            int option = sc.nextInt();
-            switch (option) {
-                case 1:
-                    viewSeatMap();
-                    break;
-
-                case 2:
-                    reserveSeat();
-                    break;
-
-                case 3:
-                    cancelReservation();
-                    break;
-
-                case 4:
-                    System.exit(0);
-                    break;
-
-                default:
-                    System.out.println("Invalid option");
-            }
-        }
-    }
-
-        private static void viewSeatMap () {
-            System.out.println("\nCurrent Seat Map");
-            for (int i = 0; i < seats.length; i++) {
-                if (seats[i]) {
-                    System.out.print("X "); //"Printing an x if the seat is reserved"
-                } else {
-                    System.out.print((i + 1) + " "); //printing the seat number if it is empty
-                }
-            }
-            System.out.println();
-        }
-
-        private static void reserveSeat () {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Enter number between 1-10: ");
-            int seatnumber = sc.nextInt();
-            if (seatnumber < 1 || seatnumber > 10) {
-                System.out.print("Invalid Seat number");
-            } else if (seats[seatnumber - 1]) {
-                System.out.println("Seat already reserved");
+            if(guess == answer){
+                System.out.println("You guessed the correct number!\n You win!");
+                correct = true;
+                break;
+            } else if (guess > answer) {
+                System.out.println("Your guess is too high.\nYou have " + (k-1) + " tries left.");
             } else {
-                seats[seatnumber - 1] = true;
-                System.out.println("Seat Reserved");
+                System.out.println("Your guess is too low.\nYou have " + (k-1) + " tries left.");
             }
+
+            k--;
+
         }
 
-        private static void cancelReservation () {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Enter number between 1-10");
-            int seatnumber = sc.nextInt();
-            if (seatnumber < 1 || seatnumber > 10) {
-                System.out.println("Invalid Seat number");
-            } else if (!seats[seatnumber - 1]) {
-                System.out.println("Seats not reserved");
-            } else {
-                seats[seatnumber - 1] = false;
-                System.out.println("Reservation Canceled");
-            }
+        if(!correct){
+            System.out.println("You ran out of all your tries\nYou lose!");
+            System.out.println("The correct number was " + answer);
         }
 
+        sc.close();
     }
+}
